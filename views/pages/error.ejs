@@ -12,11 +12,18 @@
     <link rel="stylesheet" href="styles/4-icons.css">
   </head>
   <body>
-    <header>Best Books!</header>
-    <main>
-      <h3>ERROR, ERROR, ERROR</h3>
-      <h5>Error Status: <%= status %></h5>
-      <p><%= message %></p>
+    <header>
+      <h1>Best Books!</h1>
+      <h3>Search Results</h3>
+    </header>
+    <main class="content">
+      <section class="errorMessage">
+        <h3>Error: <%= status %></h3>
+        <p><%= message %></p>
+      </section>
     </main>
+    <footer>
+      &copy; 2019 Jagdeep Singh, Jesse Van Volkinburg
+    </footer>
   </body>
 </html>

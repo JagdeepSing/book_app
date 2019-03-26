@@ -12,19 +12,24 @@
     <link rel="stylesheet" href="styles/4-icons.css">
   </head>
   <body>
-    <header>Best Books!</header>
-    <main>
+    <header>
+      <h1>Best Books!</h1>
       <h3>Search Results</h3>
+    </header>
+    <main class="content">
       <ul>
         <% searchResults.forEach(book => { %>
           <li class="book">
             <img src="<%= book.image %>" alt="Image for <%= book.title %>">
-            <h2 class="bookTitle"><%= book.title %></h2>
+            <h3 class="bookTitle"><%= book.title %></h3>
             <h5 class="bookAuthors"><%= book.authors %></h5>
             <p class="bookDescription"><%= book.description %></p>
           </li>
         <% }); %>
       </ul>
     </main>
+    <footer>
+      &copy; 2019 Jagdeep Singh, Jesse Van Volkinburg
+    </footer>
   </body>
 </html>

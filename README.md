@@ -63,24 +63,24 @@ Number and name of feature: #2: Search Form
 
 Number and name of feature: #3: Display results on page
 
-- Estimate of time needed to complete:
-- Start time:
-- Finish time:
-- Actual time needed to complete:
+- Estimate of time needed to complete: 60 mins
+- Start time: 10:40am
+- Finish time: 11:46am
+- Actual time needed to complete: 65mins - 10min break
 
 Number and name of feature: #4: Error Messages
 
-- Estimate of time needed to complete:
-- Start time:
-- Finish time:
-- Actual time needed to complete:
+- Estimate of time needed to complete: 30mins
+- Start time: 11:50am
+- Finish time: 12:15pm
+- Actual time needed to complete: 25mins
 
 Number and name of feature: #5: easy to navigate UI
 
-- Estimate of time needed to complete:
-- Start time:
-- Finish time:
-- Actual time needed to complete:
+- Estimate of time needed to complete: 60mins
+- Start time: 12:45pm
+- Finish time: 
+- Actual time needed to complete: 
 
 Number and name of feature: #6: Stretch, style website
 
