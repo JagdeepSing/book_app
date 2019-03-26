@@ -31,10 +31,8 @@ Technologies used:
   - express
   - dotEnv
   - JSON
-  - CORS
   - superagent
   - PostgreSQL
-  - pg
 
 ## Change Log
 
@@ -47,23 +45,44 @@ Jagdeep Singh, Jesse Van Volkinburg
 Credit should be given to CodeFellows for providing all of the frontend javascript, html, and CSS. CodeFellows also gave guidance on the creation of the backend portion.
 
 
-### Part 1: Jagdeep Singh and Jesse Van Volkinburg
+### Part 1: Initial App Setup
 
-Number and name of feature: #1:
-
-- Estimate of time needed to complete:
-- Start time:
-- Finish time:
-- Actual time needed to complete:
-
-Number and name of feature: #2:
+Number and name of feature: #1: Creating server.js and initial homepage
 
 - Estimate of time needed to complete:
 - Start time:
 - Finish time:
 - Actual time needed to complete:
 
-Number and name of feature: #3:
+Number and name of feature: #2: Connect with Google Books API
+
+- Estimate of time needed to complete:
+- Start time:
+- Finish time:
+- Actual time needed to complete:
+
+Number and name of feature: #3: Display results on page
+
+- Estimate of time needed to complete:
+- Start time:
+- Finish time:
+- Actual time needed to complete:
+
+Number and name of feature: #4: Error Messages
+
+- Estimate of time needed to complete:
+- Start time:
+- Finish time:
+- Actual time needed to complete:
+
+Number and name of feature: #5: easy to navigate UI
+
+- Estimate of time needed to complete:
+- Start time:
+- Finish time:
+- Actual time needed to complete:
+
+Number and name of feature: #6: Stretch, style website
 
 - Estimate of time needed to complete:
 - Start time:
