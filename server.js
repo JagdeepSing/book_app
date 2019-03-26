@@ -14,12 +14,35 @@ app.use(express.static('./public'));
 
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
+app.get('/hello', (req, res) => {
   res.send('HELLO WORLD! nothing here yet');
 });
 
-app.get('/hello', (req, res) => {
+app.get('/', (req, res) => {
   res.render('pages/index');
+});
+
+app.post('/search', (req, res) => {
+  console.log(req.body);
+  const url = `https://www.googleapis.com/books/v1/volumes?q=in${req.body.search[1]}:${req.body.search[0]}`
+  superagent.get(url)
+    .then(results => {
+      /**
+       * selfLink
+       * volumeInfo.title
+       * volumeInfo.subtile
+       * volumeInfo.authors (array)
+       * volumeInfo.publisher
+       * volumeInfo.description
+       * volumeInfo.industryIdentifiers (array) .type and .identifier 
+       * volumeInfo.pageCount
+       * volumeInfo.categories
+       * volumeInfo.maturityRating
+       * searchInfo.textSnippet
+       */
+    })
+    .catch();
+  // res.send('form submitted');
 });
 
 app.listen(PORT, () => console.log(`Book app listening on ${PORT}`));
