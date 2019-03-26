@@ -5,10 +5,36 @@
     <title>Book Collection</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/0-reset.css">
+    <link rel="stylesheet" href="styles/1-base.css">
+    <link rel="stylesheet" href="styles/2-layout.css">
+    <link rel="stylesheet" href="styles/3-modules.css">
+    <link rel="stylesheet" href="styles/4-icons.css">
   </head>
   <body>
+    <header>
+      <h1>Book App</h1>
+      <nav>
+        Navigation links
+      </nav>
+    </header>
     <main>
-      <h4>Search by Title or Author</h4>
+      <h1>Search by Title or Author</h1>
+      <form action="/searches" method="post">
+        <input type="text" name="search" placeholder="Search by Title or Author" required>
+        <label for="title">
+          <span>Title</span>
+          <input type="radio" name="search" value="title" required checked>
+        </label>
+        <label for="author">
+          <span>Author</span>
+          <input type="radio" name="search" value="author" required>
+        </label>
+        <button type="submit">Search</button>
+      </form>
     </main>
+    <footer>
+      &copy; 2019 Jagdeep Singh, Jesse Van Volkinburg
+    </footer>
   </body>
 </html>

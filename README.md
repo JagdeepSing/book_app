@@ -7,12 +7,12 @@
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+Book list app for finding and saving books to a collection. User will be able to retrieve and display the collection
 
 
 ## Getting Started
 
-  step 1: Clone the repository
+  step 1: Clone the repository: `git clone https://
   
   step 2: Make sure npm is installed
   
@@ -49,17 +49,17 @@ Credit should be given to CodeFellows for providing all of the frontend javascri
 
 Number and name of feature: #1: Creating server.js and initial homepage
 
-- Estimate of time needed to complete:
-- Start time:
-- Finish time:
-- Actual time needed to complete:
+- Estimate of time needed to complete: 45 mins
+- Start time: 9:20am
+- Finish time: 10:00am
+- Actual time needed to complete: 40mins
 
-Number and name of feature: #2: Connect with Google Books API
+Number and name of feature: #2: Search Form
 
-- Estimate of time needed to complete:
-- Start time:
-- Finish time:
-- Actual time needed to complete:
+- Estimate of time needed to complete: 30mins
+- Start time: 10:00am
+- Finish time: 10:40am
+- Actual time needed to complete: 40mins
 
 Number and name of feature: #3: Display results on page
 
