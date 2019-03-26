@@ -4,18 +4,18 @@ body {
 }
 
 h1 {
-  font-size: 22em;
+  font-size: 40pt;
 }
 
 h3 {
-  font-size: 18em;
+  font-size: 25pt;
 }
 
-h5 {
-  font-size: 14em
+h5, p {
+  font-size: 12pt;
 }
 
-header h1, header h2 {
+header {
   width: 100%;
 }
 
