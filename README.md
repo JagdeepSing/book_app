@@ -1,7 +1,7 @@
-# Lab-10 book_app
+# Lab-11
 
 
-# Project Name
+# Book App
 
 **Author**: Jagdeep Singh, Jesse Van Volkinburg
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
@@ -78,9 +78,9 @@ Number and name of feature: #4: Error Messages
 Number and name of feature: #5: easy to navigate UI
 
 - Estimate of time needed to complete: 60mins
-- Start time: 12:45pm
-- Finish time: 
-- Actual time needed to complete: 
+- Start time: 1:00pm
+- Finish time: 1:30pm
+- Actual time needed to complete: 30mins (minimal at the moment)
 
 Number and name of feature: #6: Stretch, style website
 
