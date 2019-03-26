@@ -41,13 +41,17 @@ function getBookDataFromApi(req, res) {
   const url = `https://www.googleapis.com/books/v1/volumes?q=in${req.body.search[1]}:${req.body.search[0]}`
   superagent.get(url)
     .then(results => {
-      let bookArray = results.body.items.map((bookData, idx) => {
-        let book = new Book(bookData.volumeInfo);
-        // TODO: Insert data into db
-        return book;
-      });
-      // console.log(bookArray);
-      res.render('pages/searches/show', { searchResults: bookArray });
+      if (results.body.totalItems === 0) {
+        handleError({status: 404}, res);
+      } else {
+        let bookArray = results.body.items.map((bookData) => {
+          let book = new Book(bookData.volumeInfo);
+          // TODO: Insert data into db
+          return book;
+        });
+        // console.log(bookArray);
+        res.render('pages/searches/show', { searchResults: bookArray });
+      }
     })
     .catch(error => handleError(error, res));
   // res.send('form submitted');
@@ -69,6 +73,12 @@ function Book(data) {
 }
 
 function handleError(error, res) {
-  console.error(error);
-  if (res) res.render('pages/error', error);
+  // console.error(error);
+  // console.log(res);
+  if (res) {
+    res.render('pages/error', {
+      status: error.status,
+      message: 'An error has occurred, please retry.'
+    });
+  }
 }

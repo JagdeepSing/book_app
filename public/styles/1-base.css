@@ -2,3 +2,24 @@ body {
   background: #ddd;
   color: #111;
 }
+
+h1 {
+  font-size: 22em;
+}
+
+h3 {
+  font-size: 18em;
+}
+
+h5 {
+  font-size: 14em
+}
+
+header h1, header h2 {
+  width: 100%;
+}
+
+main {
+  width: 80%;
+  margin: 0 auto;
+}
