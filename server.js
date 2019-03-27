@@ -31,13 +31,15 @@ app.get('/hello', (req, res) => {
 
 app.get('/', getBooksFromDatabase);
 
-app.post('/searches', getBookDataFromApi);
+app.get('/search', (req, res) => {
+  res.render('pages/searches/new');
+})
+app.post('/searches/new', getBookDataFromApi);
 
 // HELPER FUNCTIONS
 
 function handleError(error, errorMessage, res) {
   // console.error(error);
-  // console.log(res);
   if (res) {
     res.render('pages/error', {
       status: error.status,
@@ -50,26 +52,12 @@ function getBooksFromDatabase(req, res) {
   let selectSql = `SELECT * FROM books;`;
   client.query(selectSql)
     .then(sqlResult => {
-      // console.log(sqlResult);
       // res.send('hello');
       if (!sqlResult.rowCount) handleError({ status: 404 }, 'Fire at Alexandrea!! The knowledge has been lost, the SQL data has been dropped!', res);
-      console.log(sqlResult);
       res.render('pages/index', { sqlResults : sqlResult });
     })
     .catch(error => handleError(error, 'Database hiding :('));
 }
-
-
-// function insertData(sqlInfo, sqlData) {
-//   let values = Object.values(sqlData);
-//   console.log(`insert ${sqlInfo.endpoint} data into sql`);
-//   let sql = `INSERT INTO ${sqlInfo.endpoint}s(${Object.keys(sqlData)}) VALUES(${values.map((a, idx) => `$${idx + 1}`)}) RETURNING id;`;
-//   try {
-//     return client.query(sql, values);
-//   } catch (error) {
-//     handleError(error);
-//   }
-// }
 
 /**
  * Gets book data for passed in request and renders to page

@@ -88,3 +88,47 @@ Number and name of feature: #6: Stretch, style website
 - Start time:
 - Finish time:
 - Actual time needed to complete:
+
+### Part 2: SQL database setup
+
+Number and name of feature: #1: Link database to app and display books on homepage
+
+- Estimate of time needed to complete: 60mins
+- Start time: 9:00am
+- Finish time: 11:00am
+- Actual time needed to complete: 2hours
+
+Number and name of feature: #2: Search Form
+
+- Estimate of time needed to complete: 30mins
+- Start time: 10:00am
+- Finish time: 10:40am
+- Actual time needed to complete: 40mins
+
+Number and name of feature: #3: Display results on page
+
+- Estimate of time needed to complete: 60 mins
+- Start time: 10:40am
+- Finish time: 11:46am
+- Actual time needed to complete: 65mins - 10min break
+
+Number and name of feature: #4: Error Messages
+
+- Estimate of time needed to complete: 30mins
+- Start time: 11:50am
+- Finish time: 12:15pm
+- Actual time needed to complete: 25mins
+
+Number and name of feature: #5: easy to navigate UI
+
+- Estimate of time needed to complete: 60mins
+- Start time: 1:00pm
+- Finish time: 1:30pm
+- Actual time needed to complete: 30mins (minimal at the moment)
+
+Number and name of feature: #6: Stretch, style website
+
+- Estimate of time needed to complete:
+- Start time:
+- Finish time:
+- Actual time needed to complete:
