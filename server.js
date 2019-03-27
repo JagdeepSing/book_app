@@ -7,6 +7,12 @@ require('dotenv').config();
 const superagent = require('superagent');
 const express = require('express');
 const app = express();
+const pg = require('pg');
+
+// create client connection to database
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
 
 const PORT = process.env.PORT;
 
@@ -23,13 +29,33 @@ app.get('/hello', (req, res) => {
   res.send('HELLO WORLD! nothing here yet');
 });
 
-app.get('/', (req, res) => {
-  res.render('pages/index');
-});
+app.get('/', getBooksFromApi);
 
 app.post('/searches', getBookDataFromApi);
 
 // HELPER FUNCTIONS
+
+function handleError(error, errorMessage, res) {
+  // console.error(error);
+  // console.log(res);
+  if (res) {
+    res.render('pages/error', {
+      status: error.status,
+      message: errorMessage,
+    });
+  }
+}
+
+function getBooksFromApi(req, res) {
+  let selectSql = `SELECT * FROM books;`;
+  client.query(selectSql)
+    .then(sqlResult => {
+      if (!sqlResult.rowCount) handleError({ status: 404 }, 'Fire at Alexandrea!! The knowledge has been lost, the SQL data has been dropped!', res);
+      
+      res.render('pages/books/show', { books: sqlResult });
+    })
+    .catch(error => handleError(error, 'Database hiding :('));
+}
 
 /**
  * Gets book data for passed in request and renders to page
@@ -40,17 +66,16 @@ app.post('/searches', getBookDataFromApi);
 function getBookDataFromApi(req, res) {
   const url = `https://www.googleapis.com/books/v1/volumes?q=in${req.body.search[1]}:${req.body.search[0]}`
   superagent.get(url)
-    .then(results => {
-      if (results.body.totalItems === 0) {
+    .then(apiData => {
+      if (apiData.body.totalItems === 0) {
         handleError({status: 404}, res);
       } else {
-        let bookArray = results.body.items.map((bookData) => {
-          let book = new Book(bookData.volumeInfo);
+        let resultBooks = apiData.body.items.map((bookData) => {
+          let bookObject = new Book(bookData.volumeInfo);
           // TODO: Insert data into db
-          return book;
+          return bookObject;
         });
-        // console.log(bookArray);
-        res.render('pages/searches/show', { searchResults: bookArray });
+        res.render('pages/searches/show', { searchResults: resultBooks });
       }
     })
     .catch(error => handleError(error, res));
@@ -58,27 +83,18 @@ function getBookDataFromApi(req, res) {
 }
 
 // Object constructor
-function Book(data) {
-  this.title = data.title || '';
-  this.subtitle = data.subtitle || '';
+function Book(data, bookshelf) {
   this.authors = (data.authors) ? data.authors.join(', ') : 'No known author(s)';
-  this.publisher = data.publisher || 'No publisher info';
+  this.title = data.title || 'No Title';
+  this.isbn = `${data.industryIdentifiers[0].type} ${data.industryIdentifiers[0].identifier}` || 'N/A';
+  this.image = (data.imageLinks.thumbnail) ? data.imageLinks.thumbnail.replace('http://', 'https://') : 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';
   this.description = data.description || 'No description available.';
-  this.isbn = data.industryIdentifiers[0].identifier || 'N/A';
-  this.pageCount = data.pageCount || -1;
-  this.categories = (data.categories) ? data.categories.join(', ') : '';
-  this.maturityRating = data.maturityRating || '';
-  this.image = data.imageLinks.thumbnail.replace('http://', 'https://') || 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';
-  this.created_at = Date.now();
-}
+  this.bookshelf = bookshelf;
 
-function handleError(error, res) {
-  // console.error(error);
-  // console.log(res);
-  if (res) {
-    res.render('pages/error', {
-      status: error.status,
-      message: 'An error has occurred, please retry.'
-    });
-  }
+  // this.subtitle = data.subtitle || 'No Subtitle';
+  // this.publisher = data.publisher || 'No publisher info';
+  // this.pageCount = data.pageCount || -1;
+  // this.categories = (data.categories) ? data.categories.join(', ') : '';
+  // this.maturityRating = data.maturityRating || 'No Rating';
+  // this.created_at = Date.now();
 }
