@@ -1,7 +1,15 @@
 body {
-  background: #ddd;
-  color: #111;
+  background: #a9a9a9;
   text-align: center;
+  margin: 0 auto;
+}
+
+main {
+  padding: 5vh 5vw;
+}
+
+footer {
+  margin-bottom: 30px;
 }
 
 h1 {
@@ -14,15 +22,16 @@ h3 {
   font-size: 25pt;
 }
 
+h4 {
+  font-size: 18pt;
+}
+
 h5, p {
   font-size: 12pt;
 }
 
 header {
   width: 100%;
-}
-
-main {
-  width: 80%;
-  margin: 0 auto;
+  position: sticky;
+  top: 0;
 }
