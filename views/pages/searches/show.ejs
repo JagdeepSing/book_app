@@ -2,25 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Book Collection</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/0-reset.css">
-    <link rel="stylesheet" href="styles/1-base.css">
-    <link rel="stylesheet" href="styles/2-layout.css">
-    <link rel="stylesheet" href="styles/3-modules.css">
-    <link rel="stylesheet" href="styles/4-icons.css">
+    <%- include('../../layout/head') %>
   </head>
   <body>
     <header>
-      <h1>Best Books!</h1>
-      <h3>Search Results</h3>
+      <%- include('../../layout/header') %>
     </header>
     <main class="content">
       <ul>
         <% searchResults.forEach(book => { %>
           <li class="book">
-            <img src="<%= book.image %>" alt="Image for <%= book.title %>">
+            <img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
             <h3 class="bookTitle"><%= book.title %></h3>
             <h5 class="bookAuthors"><%= book.authors %></h5>
             <p class="bookDescription"><%= book.description %></p>
@@ -29,7 +21,7 @@
       </ul>
     </main>
     <footer>
-      &copy; 2019 Jagdeep Singh, Jesse Van Volkinburg
+      <%- include('../../layout/footer') %>
     </footer>
   </body>
 </html>

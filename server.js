@@ -7,6 +7,12 @@ require('dotenv').config();
 const superagent = require('superagent');
 const express = require('express');
 const app = express();
+const pg = require('pg');
+
+// create client connection to database
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
 
 const PORT = process.env.PORT;
 
@@ -23,13 +29,35 @@ app.get('/hello', (req, res) => {
   res.send('HELLO WORLD! nothing here yet');
 });
 
-app.get('/', (req, res) => {
-  res.render('pages/index');
-});
+app.get('/', getBooksFromDatabase);
 
-app.post('/searches', getBookDataFromApi);
+app.get('/search', (req, res) => {
+  res.render('pages/searches/new');
+})
+app.post('/searches/new', getBookDataFromApi);
 
 // HELPER FUNCTIONS
+
+function handleError(error, errorMessage, res) {
+  // console.error(error);
+  if (res) {
+    res.render('pages/error', {
+      status: error.status,
+      message: errorMessage,
+    });
+  }
+}
+
+function getBooksFromDatabase(req, res) {
+  let selectSql = `SELECT * FROM books;`;
+  client.query(selectSql)
+    .then(sqlResult => {
+      // res.send('hello');
+      if (!sqlResult.rowCount) handleError({ status: 404 }, 'Fire at Alexandrea!! The knowledge has been lost, the SQL data has been dropped!', res);
+      res.render('pages/index', { sqlResults : sqlResult });
+    })
+    .catch(error => handleError(error, 'Database hiding :('));
+}
 
 /**
  * Gets book data for passed in request and renders to page
@@ -38,47 +66,46 @@ app.post('/searches', getBookDataFromApi);
  * @param {object} res express.js response
  */
 function getBookDataFromApi(req, res) {
-  const url = `https://www.googleapis.com/books/v1/volumes?q=in${req.body.search[1]}:${req.body.search[0]}`
+  const url = `https://www.googleapis.com/books/v1/volumes?q=+in${req.body.search[1]}:${req.body.search[0]}`
   superagent.get(url)
-    .then(results => {
-      if (results.body.totalItems === 0) {
-        handleError({status: 404}, res);
+    .then(apiData => {
+      if (apiData.body.totalItems === 0) {
+        handleError({status: 404}, `You found something Google doesn't know!!`, res);
       } else {
-        let bookArray = results.body.items.map((bookData) => {
-          let book = new Book(bookData.volumeInfo);
-          // TODO: Insert data into db
-          return book;
+        let resultBooks = apiData.body.items.map((bookData) => {
+          let bookObject = new Book(bookData.volumeInfo);
+
+          let insertSql = `INSERT INTO books (author, title, isbn, image_url, description, bookshelf) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+          let insertValues = Object.values(bookObject);
+
+          client.query(insertSql, insertValues)
+            .then(insertReturn => {
+              bookObject.id = insertReturn.rows[0].id;
+            })
+            .catch(error => handleError(error, `Google gave us some ugly data :(`, res));
+
+          return bookObject;
         });
-        // console.log(bookArray);
-        res.render('pages/searches/show', { searchResults: bookArray });
+        res.render('pages/searches/show', { searchResults: resultBooks });
       }
     })
-    .catch(error => handleError(error, res));
-  // res.send('form submitted');
+    .catch(error => handleError(error, `Google won't talk to us :(`, res));
 }
 
 // Object constructor
-function Book(data) {
-  this.title = data.title || '';
-  this.subtitle = data.subtitle || '';
+function Book(data, bookshelf) {
   this.authors = (data.authors) ? data.authors.join(', ') : 'No known author(s)';
-  this.publisher = data.publisher || 'No publisher info';
+  this.title = data.title || 'No Title';
+  this.isbn = data.industryIdentifiers ? `${data.industryIdentifiers[0].type} ${data.industryIdentifiers[0].identifier}` : 'N/A';
+  this.image_url = (data.imageLinks.thumbnail) ? data.imageLinks.thumbnail.replace('http://', 'https://') : 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';
   this.description = data.description || 'No description available.';
-  this.isbn = data.industryIdentifiers[0].identifier || 'N/A';
-  this.pageCount = data.pageCount || -1;
-  this.categories = (data.categories) ? data.categories.join(', ') : '';
-  this.maturityRating = data.maturityRating || '';
-  this.image = data.imageLinks.thumbnail.replace('http://', 'https://') || 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';
-  this.created_at = Date.now();
-}
+  this.bookshelf = bookshelf || 'Not Shelfed';
 
-function handleError(error, res) {
-  // console.error(error);
-  // console.log(res);
-  if (res) {
-    res.render('pages/error', {
-      status: error.status,
-      message: 'An error has occurred, please retry.'
-    });
-  }
+
+  // this.subtitle = data.subtitle || 'No Subtitle';
+  // this.publisher = data.publisher || 'No publisher info';
+  // this.pageCount = data.pageCount || -1;
+  // this.categories = (data.categories) ? data.categories.join(', ') : '';
+  // this.maturityRating = data.maturityRating || 'No Rating';
+  // this.created_at = Date.now();
 }
