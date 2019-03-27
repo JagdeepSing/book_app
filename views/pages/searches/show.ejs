@@ -20,7 +20,7 @@
       <ul>
         <% searchResults.forEach(book => { %>
           <li class="book">
-            <img src="<%= book.image %>" alt="Image for <%= book.title %>">
+            <img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
             <h3 class="bookTitle"><%= book.title %></h3>
             <h5 class="bookAuthors"><%= book.authors %></h5>
             <p class="bookDescription"><%= book.description %></p>
