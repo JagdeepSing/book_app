@@ -1,0 +1,47 @@
+
+.menu-item {
+  padding: 5px 0;
+}
+
+.menu-item * {
+  color: white;
+  text-decoration: none;
+}
+
+.page-subtitle {
+  background-color: #585858;
+  padding: 15px;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book img {
+  margin-bottom: 15px;
+  width: 60%;
+}
+
+.bookTitle {
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+.bookAuthor {
+  font-style: italic;
+  margin: 8px;
+}
+
+.bookDescription {
+  margin: 20px;
+}
+
+.big-btn {
+  background-color: black;
+  color: white;
+  width: 50%;
+  height: 70px;
+  font-size: 14pt;
+  margin: 20px;
+}

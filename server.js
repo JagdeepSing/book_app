@@ -94,7 +94,7 @@ function getBookDataFromApi(req, res) {
 
 // Object constructor
 function Book(data, bookshelf) {
-  this.authors = (data.authors) ? data.authors.join(', ') : 'No known author(s)';
+  this.author = (data.authors) ? data.authors.join(', ') : 'No known author(s)';
   this.title = data.title || 'No Title';
   this.isbn = data.industryIdentifiers ? `${data.industryIdentifiers[0].type} ${data.industryIdentifiers[0].identifier}` : 'N/A';
   this.image_url = (data.imageLinks.thumbnail) ? data.imageLinks.thumbnail.replace('http://', 'https://') : 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';

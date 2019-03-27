@@ -1,4 +1,26 @@
 #app-title {
   display: flex;
   justify-content: space-between;
+  background-color: black;
+  color: white;
+  padding: 10px;
+}
+
+#menu {
+  background-color: #000000d9;
+  padding: 10px 0;
+  position: absolute;
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.book {
+  background-color: #dedede;
+  margin: 0 20px;
+  margin-bottom: 50px;
+  padding: 5% 10%;
+  box-shadow: 1px 1px 1px 1px;
 }

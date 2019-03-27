@@ -7,17 +7,21 @@
   <body>
     <header>
       <%- include('../layout/header') %>
-      <a href="/search">Search by Title or Author</a>
     </header>
+    <div class="page-subtitle">
+      <div id="results-num"><%= sqlResults.rowCount %></div>
+      <h4>Saved Books</h4>
+    </div>
     <main class="content">
       <!-- All books from database -->
       <ul>
         <% sqlResults.rows.forEach(book => { %>
-          <li class="book">
+          <li class="book" data-id="<%= book.id %>">
             <img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
             <h3 class="bookTitle"><%= book.title %></h3>
-            <h5 class="bookAuthors"><%= book.authors %></h5>
-            <p class="bookDescription"><%= book.description %></p>
+            <h5 class="bookAuthor"><%= book.author %></h5>
+            <p class="bookDescription hidden"><%= book.description %></p>
+            <button class="big-btn detials-btn">View Details</button>
           </li>
         <% }); %>
         </ul>
