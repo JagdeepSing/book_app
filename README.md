@@ -98,12 +98,12 @@ Number and name of feature: #1: Link database to app and display books on homepa
 - Finish time: 11:00am
 - Actual time needed to complete: 2hours
 
-Number and name of feature: #2: Search Form
+Number and name of feature: #2: show details for single book
 
-- Estimate of time needed to complete: 30mins
-- Start time: 10:00am
-- Finish time: 10:40am
-- Actual time needed to complete: 40mins
+- Estimate of time needed to complete: 40mins
+- Start time: 11:00am
+- Finish time: 
+- Actual time needed to complete: 
 
 Number and name of feature: #3: Display results on page
 
