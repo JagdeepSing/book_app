@@ -1,0 +1,7 @@
+<div class="bookDetails">
+    <p class="bookDescription"><%= book.description %></p>
+    <% if (deepDetails) { %>
+      <h5 class="bookISBN"> <%= book.isbn %></h5>
+      <h5 class="bookshelf">Bookshelf: <%= book.bookshelf %></h5>
+    <% } %>
+  </div>

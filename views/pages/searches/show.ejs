@@ -8,13 +8,14 @@
       <%- include('../../layout/header') %>
     </header>
     <main class="content">
-      <ul>
+      <ul id="books-container">
         <% searchResults.forEach(book => { %>
-          <li class="book">
-            <img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
-            <h3 class="bookTitle"><%= book.title %></h3>
-            <h5 class="bookAuthors"><%= book.authors %></h5>
-            <p class="bookDescription"><%= book.description %></p>
+          <li class="book" data-id="<%= book.id %>">
+            <%- include('../partials/book-contents', { book: book}) %>
+            <%- include('../books/detail', { book: book, deepDetails: false }) %>
+            <a href="/books/<%= book.id %>">
+              <button class="big-btn">Select This Book!</button>
+            </a>
           </li>
         <% }); %>
       </ul>
@@ -22,5 +23,6 @@
     <footer>
       <%- include('../../layout/footer') %>
     </footer>
+    <%- include('../../layout/js-links') %>
   </body>
 </html>

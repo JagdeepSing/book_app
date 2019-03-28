@@ -37,7 +37,7 @@
   margin: 20px;
   background-color: white;
   padding: 15px 10px;
-  border-radius: 5em;
+  border-radius: 1em;
 }
 
 .big-btn {
@@ -47,6 +47,7 @@
   height: 70px;
   font-size: 14pt;
   margin: 20px 0;
+  min-width: 200px;
 }
 
 .error-heading {

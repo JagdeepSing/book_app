@@ -43,8 +43,9 @@ app.get('/search', (req, res) => {
   res.render('pages/searches/new');
 });
 
-app.get('books/:book_id', (req, res) => {
+app.get('/books/:book_id', (req, res) => {
   let id = req.params.book_id;
+  
 });
 
 app.get('/*', (req, res) => {
