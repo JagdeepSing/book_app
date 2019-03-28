@@ -18,7 +18,7 @@
         <% sqlResults.rows.forEach(book => { %>
           <li class="book" data-id="<%= book.id %>">
             <%- include('./partials/book-contents', { book: book, show: 'none' }) %>
-            <a href="/books/savedbook/<%= book.id %>">
+            <a href="/savedbooks/details/<%= book.id %>">
               <button class="big-btn">View Details</button>
             </a>
           </li>

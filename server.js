@@ -17,8 +17,11 @@ client.on('error', err => console.error(err));
 
 const PORT = process.env.PORT;
 
+// Express middleware
+// Utilize ExpressJS functionality to parse the body of the request
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
+
 app.use(methodOverride(function (req, res) {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     // look in urlencoded POST bodies and delete it
@@ -54,9 +57,9 @@ app.get('/search', (req, res) => {
 });
 
 // TODO: make it work
-app.get('/books/savedbook/:book_id', (req, res) => {
+app.get('/:book_table/details/:book_id', (req, res) => {
   // query saved books to display
-  let query = `SELECT * FROM books WHERE id=$1;`;
+  let query = `SELECT * FROM ${req.params.book_table} WHERE id=$1;`;
   let values = [req.params.book_id];
 
   client.query(query, values)
@@ -68,13 +71,17 @@ app.get('/books/savedbook/:book_id', (req, res) => {
     .catch(error => console.error(error));
 });
 
-app.get('/update/:book_id', (req, res) => {
-  getSqlByID('books', req.params.book_id, res)
+app.get('/:book_table/edit/:book_id', (req, res) => {
+  getSqlByID(req.params.book_table, req.params.book_id, res)
     .then(bookObj => {
       // console.log(bookObj.rows[0]);
       res.render('pages/books/edit', {book: bookObj.rows[0]});
     })
     .catch(error => console.error(error));
+});
+
+app.put('/:book_table/update/:book_id', (req, res) => {
+  console.log(req.body);
 });
 
 app.get('/*', (req, res) => {
@@ -115,7 +122,6 @@ function getBooksFromDatabase(req, res) {
   let selectSql = `SELECT * FROM books;`;
   client.query(selectSql)
     .then(sqlResult => {
-      // res.send('hello');
       if (!sqlResult.rowCount) handleError({ status: 404 }, 'Fire at Alexandrea!! The knowledge has been lost, the SQL data has been dropped!', gifs.thereWasTime, res);
       res.render('pages/index', { sqlResults : sqlResult });
     })

@@ -12,7 +12,7 @@
       <ul id="books-container">
         <li class="book" data-id="<%= book.id %>">
           <%- include('../partials/book-contents', { book: book, show: 'deep details' }) %>
-          <a href="/update/<%= book.id %>">
+          <a href="/savedbooks/edit/<%= book.id %>">
             <button class="big-btn">Update Details</button>
           </a>
           <a href="/delete/<%= book.id %>">
