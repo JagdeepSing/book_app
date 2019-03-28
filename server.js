@@ -35,22 +35,29 @@ const gifs = {
 
 
 // ROUTES
+
+// get routes
 app.get('/', getBooksFromDatabase);
 
 app.get('/search', (req, res) => {
   res.render('pages/searches/new');
 });
 
-app.post('/searches/new', getBookDataFromApi);
+app.get('books/:book_id', (req, res) => {
+  let id = req.params.book_id;
+});
 
 app.get('/*', (req, res) => {
   handleError({ status: 404 }, 'Nothing here... ¯¯\\_(ツ)_/¯', gifs.moveAlong, res);
 });
 
+// post routes
+app.post('/searches/new', getBookDataFromApi);
+
 // HELPER FUNCTIONS
 
 function handleError(error, errorMessage, errorGif, res) {
-  // console.error(error);
+  console.error(error);
   if (res) {
     res.render('pages/error', {
       status: error.status,
@@ -90,11 +97,19 @@ function getBookDataFromApi(req, res) {
           let insertSql = `INSERT INTO books (author, title, isbn, image_url, description, bookshelf) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
           let insertValues = Object.values(bookObject);
 
-          client.query(insertSql, insertValues)
-            .then(insertReturn => {
-              bookObject.id = insertReturn.rows[0].id;
-            })
-            .catch(error => handleError(error, `Google gave us some ugly data :(`, gifs.smh, res));
+          // client.query(insertSql, insertValues)
+          //   .then(insertReturn => {
+          //     console.log('----------------------------------------------------------------');
+          //     console.log(insertReturn);
+          //     bookObject.id = insertReturn.rows[0].id;
+          //   })
+          //   .catch(error => {
+          //     if (error.code === 23505) {
+          //       console.log('-------------------- duplicate insert ------------------------');
+          //     }
+          //     console.error(error);
+          //     // handleError(error, `Google gave us some ugly data :(`, gifs.smh, res);
+          //   });
 
           return bookObject;
         });
