@@ -80,14 +80,7 @@ Number and name of feature: #5: easy to navigate UI
 - Estimate of time needed to complete: 60mins
 - Start time: 1:00pm
 - Finish time: 1:30pm
-- Actual time needed to complete: 30mins (minimal at the moment)
-
-Number and name of feature: #6: Stretch, style website
-
-- Estimate of time needed to complete:
-- Start time:
-- Finish time:
-- Actual time needed to complete:
+- Actual time needed to complete: 30mins
 
 ### Part 2: SQL database setup
 
@@ -128,7 +121,24 @@ Number and name of feature: #5: easy to navigate UI
 
 Number and name of feature: #6: Stretch, style website
 
-- Estimate of time needed to complete:
-- Start time:
-- Finish time:
-- Actual time needed to complete:
+- Estimate of time needed to complete: 60mins
+- Start time: 8:00pm
+- Finish time: 9:00pm
+- Actual time needed to complete: 60mins
+
+### Part 3: Adding Saved Books and UI Feature Updates
+
+Number and name of feature: #1: UI updates
+
+- Estimate of time needed to complete: 2hr
+- Start time: 9:20am
+- Finish time: 10:45am
+- Actual time needed to complete: 1hr 25min
+
+
+Number and name of feature: #2: Add details page
+
+- Estimate of time needed to complete: 60mins
+- Start time: 10:50am
+- Finish time: 
+- Actual time needed to complete: 
