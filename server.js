@@ -56,7 +56,7 @@ app.get('/search', (req, res) => {
 // TODO: make it work
 app.get('/books/savedbook/:book_id', (req, res) => {
   // query saved books to display
-  let query = `SELECT * FROM books WHERE id=$1`;
+  let query = `SELECT * FROM books WHERE id=$1;`;
   let values = [req.params.book_id];
 
   client.query(query, values)
@@ -69,8 +69,12 @@ app.get('/books/savedbook/:book_id', (req, res) => {
 });
 
 app.get('/update/:book_id', (req, res) => {
-  let bookObj = getSqlByID('books', req.params.book_id);
-  res.render('pages/books/edit', {book: bookObj});
+  getSqlByID('books', req.params.book_id, res)
+    .then(bookObj => {
+      // console.log(bookObj.rows[0]);
+      res.render('pages/books/edit', {book: bookObj.rows[0]});
+    })
+    .catch(error => console.error(error));
 });
 
 app.get('/*', (req, res) => {
@@ -95,17 +99,15 @@ function handleError(error, errorMessage, errorGif, res) {
   }
 }
 
-function getSqlByID(table, id) {
-  let query = `SELECT * FROM ${table} WHERE id=$1`;
+function getSqlByID(table, id, res) {
+  let query = `SELECT * FROM ${table} WHERE id=$1;`;
   let values = [id];
 
   try {
-    client.query(query, values)
-      .then(queryResult => (queryResult.rowCount) ? queryResult.rows[0] : -1 );
+    return client.query(query, values);
   }
   catch (error) {
-    console.error(error);
-    return -1;
+    handleError({status: 404}, 'Data invalid or not found', gifs.smh, res);
   }
 }
 
@@ -168,5 +170,5 @@ function Book(data, bookshelf) {
   this.isbn = data.industryIdentifiers ? `${data.industryIdentifiers[0].type}: ${data.industryIdentifiers[0].identifier}` : null;
   this.image_url = (data.imageLinks.thumbnail) ? data.imageLinks.thumbnail.replace('http://', 'https://') : 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';
   this.description = data.description || 'No description available.';
-  this.bookshelf = bookshelf || 'Not Shelfed';
+  this.bookshelf = bookshelf || 'Not Shelved';
 }
