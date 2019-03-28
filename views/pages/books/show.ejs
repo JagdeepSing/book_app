@@ -18,7 +18,9 @@
         <img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
         <h3 class="bookTitle"><%= book.title %></h3>
         <h5 class="bookAuthors"><%= book.authors %></h5>
-        <a href="#" class="details_link">View Details</a>
+        <a href="#" class="details_link">
+          <button class="big-btn">View Details</button>
+        </a>
 
       </li>
       <% }); %>

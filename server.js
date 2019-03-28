@@ -8,6 +8,7 @@ const superagent = require('superagent');
 const express = require('express');
 const app = express();
 const pg = require('pg');
+const methodOverride = require('method-override');
 
 // create client connection to database
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -18,6 +19,15 @@ const PORT = process.env.PORT;
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
+
 
 app.set('view engine', 'ejs');
 
@@ -43,9 +53,24 @@ app.get('/search', (req, res) => {
   res.render('pages/searches/new');
 });
 
-app.get('/books/:book_id', (req, res) => {
-  let id = req.params.book_id;
-  
+// TODO: make it work
+app.get('/books/savedbook/:book_id', (req, res) => {
+  // query saved books to display
+  let query = `SELECT * FROM books WHERE id=$1`;
+  let values = [req.params.book_id];
+
+  client.query(query, values)
+    .then(sqlResult => {
+      if (!sqlResult.rowCount) handleError({status: 404}, 'No good, the book went up in smoke', gifs.hiding, res);
+
+      res.render('pages/books/detail', {book: sqlResult.rows[0]});
+    })
+    .catch(error => console.error(error));
+});
+
+app.get('/update/:book_id', (req, res) => {
+  let bookObj = getSqlByID('books', req.params.book_id);
+  res.render('pages/books/edit', {book: bookObj});
 });
 
 app.get('/*', (req, res) => {
@@ -54,6 +79,8 @@ app.get('/*', (req, res) => {
 
 // post routes
 app.post('/searches/new', getBookDataFromApi);
+
+
 
 // HELPER FUNCTIONS
 
@@ -65,6 +92,20 @@ function handleError(error, errorMessage, errorGif, res) {
       message: errorMessage,
       gif: errorGif,
     });
+  }
+}
+
+function getSqlByID(table, id) {
+  let query = `SELECT * FROM ${table} WHERE id=$1`;
+  let values = [id];
+
+  try {
+    client.query(query, values)
+      .then(queryResult => (queryResult.rowCount) ? queryResult.rows[0] : -1 );
+  }
+  catch (error) {
+    console.error(error);
+    return -1;
   }
 }
 

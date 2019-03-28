@@ -10,7 +10,15 @@
     
     <main class="content">
       <ul id="books-container">
-        <%- include('../partials/book-contents', { book: book, deepDetails: true }) %>
+        <li class="book" data-id="<%= book.id %>">
+          <%- include('../partials/book-contents', { book: book, show: 'deep details' }) %>
+          <a href="/update/<%= book.id %>">
+            <button class="big-btn">Update Details</button>
+          </a>
+          <a href="/delete/<%= book.id %>">
+            <button class="big-btn">Delete</button>
+          </a>
+        </li>
       </ul>
     </main>
     <footer>
