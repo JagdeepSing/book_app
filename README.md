@@ -140,5 +140,19 @@ Number and name of feature: #2: Add details page
 
 - Estimate of time needed to complete: 60mins
 - Start time: 10:50am
-- Finish time: 
-- Actual time needed to complete: 
+- Finish time: 12:00pm
+- Actual time needed to complete: 70mins
+
+Number and name of feature: #3: Add edit page
+
+- Estimate of time needed to complete: 60mins
+- Start time: 12:20pm
+- Finish time: 1:15pm
+- Actual time needed to complete: 55mins
+
+Number and name of feature: #4: Add update book button
+
+- Estimate of time needed to complete: 60mins
+- Start time: 1:20pm
+- Finish time: 1:40pm
+- Actual time needed to complete: not completed yet

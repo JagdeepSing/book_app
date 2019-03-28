@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS savedbooks;
 DROP TABLE IF EXISTS books;
 
 CREATE TABLE books (
@@ -10,6 +11,18 @@ CREATE TABLE books (
   bookshelf VARCHAR(255)
 );
 
+CREATE TABLE savedbooks (
+  id SERIAL PRIMARY KEY,
+  author VARCHAR(255),
+  title VARCHAR(255),
+  isbn VARCHAR(255) UNIQUE,
+  image_url VARCHAR(512),
+  description TEXT,
+  bookshelf VARCHAR(255),
+  book_id INTEGER NOT NULL,
+  FOREIGN KEY (book_id) REFERENCES books (id)
+);
+
 INSERT INTO books
   (author, title, isbn, image_url, description, bookshelf)
   VALUES
@@ -19,3 +32,13 @@ INSERT INTO books
   (author, title, isbn, image_url, description, bookshelf)
   VALUES
   ('Richard Dawkins', 'The Selfish Gene', 'ISBN_10 0192860925', 'http://books.google.com/books/content?id=WkHO9HI7koEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api', 'An ethologist shows man to be a gene machine whose world is one of savage competition and deceit', 'Evolution');
+
+  INSERT INTO savedbooks
+  (author, title, isbn, image_url, description, bookshelf, book_id)
+  VALUES
+  ('L. E. Modesitt, Jr.', 'Gravity Dreams', 'ISBN_10 1429995424', 'http://books.google.com/books/content?id=OYMNVrRJ28oC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api', 'No Description', 'Fiction', 1);
+
+INSERT INTO savedbooks
+  (author, title, isbn, image_url, description, bookshelf, book_id)
+  VALUES
+  ('Richard Dawkins', 'The Selfish Gene', 'ISBN_10 0192860925', 'http://books.google.com/books/content?id=WkHO9HI7koEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api', 'An ethologist shows man to be a gene machine whose world is one of savage competition and deceit', 'Evolution', 2);

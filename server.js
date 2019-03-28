@@ -8,6 +8,7 @@ const superagent = require('superagent');
 const express = require('express');
 const app = express();
 const pg = require('pg');
+const methodOverride = require('method-override');
 
 // create client connection to database
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -16,8 +17,20 @@ client.on('error', err => console.error(err));
 
 const PORT = process.env.PORT;
 
+// Express middleware
+// Utilize ExpressJS functionality to parse the body of the request
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
+
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
+
 
 app.set('view engine', 'ejs');
 
@@ -43,9 +56,32 @@ app.get('/search', (req, res) => {
   res.render('pages/searches/new');
 });
 
-app.get('/books/:book_id', (req, res) => {
-  let id = req.params.book_id;
-  
+// TODO: make it work
+app.get('/:book_table/details/:book_id', (req, res) => {
+  // query saved books to display
+  let query = `SELECT * FROM ${req.params.book_table} WHERE id=$1;`;
+  let values = [req.params.book_id];
+
+  client.query(query, values)
+    .then(sqlResult => {
+      if (!sqlResult.rowCount) handleError({status: 404}, 'No good, the book went up in smoke', gifs.hiding, res);
+
+      res.render('pages/books/detail', {book: sqlResult.rows[0]});
+    })
+    .catch(error => console.error(error));
+});
+
+app.get('/:book_table/edit/:book_id', (req, res) => {
+  getSqlByID(req.params.book_table, req.params.book_id, res)
+    .then(bookObj => {
+      // console.log(bookObj.rows[0]);
+      res.render('pages/books/edit', {book: bookObj.rows[0]});
+    })
+    .catch(error => console.error(error));
+});
+
+app.put('/:book_table/update/:book_id', (req, res) => {
+  console.log(req.body);
 });
 
 app.get('/*', (req, res) => {
@@ -54,6 +90,8 @@ app.get('/*', (req, res) => {
 
 // post routes
 app.post('/searches/new', getBookDataFromApi);
+
+
 
 // HELPER FUNCTIONS
 
@@ -68,11 +106,22 @@ function handleError(error, errorMessage, errorGif, res) {
   }
 }
 
+function getSqlByID(table, id, res) {
+  let query = `SELECT * FROM ${table} WHERE id=$1;`;
+  let values = [id];
+
+  try {
+    return client.query(query, values);
+  }
+  catch (error) {
+    handleError({status: 404}, 'Data invalid or not found', gifs.smh, res);
+  }
+}
+
 function getBooksFromDatabase(req, res) {
   let selectSql = `SELECT * FROM books;`;
   client.query(selectSql)
     .then(sqlResult => {
-      // res.send('hello');
       if (!sqlResult.rowCount) handleError({ status: 404 }, 'Fire at Alexandrea!! The knowledge has been lost, the SQL data has been dropped!', gifs.thereWasTime, res);
       res.render('pages/index', { sqlResults : sqlResult });
     })
@@ -127,5 +176,5 @@ function Book(data, bookshelf) {
   this.isbn = data.industryIdentifiers ? `${data.industryIdentifiers[0].type}: ${data.industryIdentifiers[0].identifier}` : null;
   this.image_url = (data.imageLinks.thumbnail) ? data.imageLinks.thumbnail.replace('http://', 'https://') : 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';
   this.description = data.description || 'No description available.';
-  this.bookshelf = bookshelf || 'Not Shelfed';
+  this.bookshelf = bookshelf || 'Not Shelved';
 }

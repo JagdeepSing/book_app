@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../../layout/head') %>
-  </head>
-  <body>
-    <header>
-      <%- include('../../layout/header') %>
-    </header>
-    <main class="content">
-      <ul id="books-container">
-        <% searchResults.forEach(book => { %>
-          <li class="book" data-id="<%= book.id %>">
-            <%- include('../partials/book-contents', { book: book}) %>
-            <%- include('../books/detail', { book: book, deepDetails: false }) %>
-            <a href="/books/<%= book.id %>">
-              <button class="big-btn">Select This Book!</button>
-            </a>
-          </li>
-        <% }); %>
-      </ul>
-    </main>
-    <footer>
-      <%- include('../../layout/footer') %>
-    </footer>
-    <%- include('../../layout/js-links') %>
-  </body>
+
+<head>
+  <%- include('../../layout/head') %>
+</head>
+
+<body>
+  <header>
+    <%- include('../../layout/header') %>
+  </header>
+  <main class="content">
+    <ul id="books-container">
+      <% searchResults.forEach(book => { %>
+      <li class="book" data-id="<%= book.id %>">
+        <%- include('../partials/book-contents', { book: book, show: 'details' }) %>
+        <a href="/books/<%= book.id %>">
+          <button class="big-btn">Select This Book!</button>
+        </a>
+      </li>
+      <% }); %>
+    </ul>
+  </main>
+  <footer>
+    <%- include('../../layout/footer') %>
+  </footer>
+  <%- include('../../layout/js-links') %>
+</body>
+
 </html>

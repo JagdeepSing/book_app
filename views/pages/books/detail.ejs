@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <%- include('../../layout/head') %>
+  </head>
+  <body>
+    <header>
+      <%- include('../../layout/header') %>
+    </header>
+    
+    <main class="content">
+      <ul id="books-container">
+        <li class="book" data-id="<%= book.id %>">
+          <%- include('../partials/book-contents', { book: book, show: 'deep details' }) %>
+          <a href="/savedbooks/edit/<%= book.id %>">
+            <button class="big-btn">Update Details</button>
+          </a>
+          <a href="/delete/<%= book.id %>">
+            <button class="big-btn">Delete</button>
+          </a>
+        </li>
+      </ul>
+    </main>
+    <footer>
+      <%- include('../../layout/footer') %>
+    </footer>
 
-<head>
-  <%- include('../layout/head') %>
-</head>
-
-<body>
-  <header>
-    <%- include('../layout/header') %>
-  </header>
-  <main class="content">
-    <!-- All books from database -->
-    <ul>
-      <% sqlResults.rows.forEach(book => { %>
-      <li class="book">
-
-        <img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
-        <h3 class="bookTitle"><%= book.title %></h3>
-        <h5 class="bookAuthors"><%= book.authors %></h5>
-        <a href="#" class="details_link">View Details</a>
-
-      </li>
-      <% }); %>
-    </ul>
-  </main>
-  <footer>
-    <%- include('../layout/footer') %>
-  </footer>
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="./js/app.js"></script>
-</body>
+    <%- include('../../layout/js-links') %>
+  </body>
 </html>

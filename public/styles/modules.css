@@ -73,13 +73,13 @@
   align-items: center;
 }
 
-.search-form > * {
+.search-form fieldset > * {
   margin-bottom: 30px;
   width: 90%;
   font-size: 16pt;
 }
 
-.search-form > input {
+.search-form fieldset > input {
   background-color: white;
 }
 
@@ -92,7 +92,7 @@
   cursor: pointer;
 }
 
-.search-form > input, .search-form > label {
+.search-form fieldset > input, .search-form fieldset > label {
   height: 40px;
   padding: 10px;
 }
