@@ -85,7 +85,6 @@ app.get('/*', (req, res) => {
 app.post('/searches/new', getBookDataFromApi);
 
 
-
 // HELPER FUNCTIONS
 
 function handleError(error, errorMessage, errorGif, res) {
