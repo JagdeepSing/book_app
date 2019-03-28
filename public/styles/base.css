@@ -6,6 +6,7 @@ body {
 
 main {
   padding: 5vh 5vw;
+  min-height: 75vh;
 }
 
 footer {

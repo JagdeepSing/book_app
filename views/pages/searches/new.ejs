@@ -7,22 +7,26 @@
     <header>
       <%- include('../../layout/header') %>
     </header>
+    <div class="page-subtitle">
+      <h4>Search by Title or Author</h4>
+    </div>
     <main class="content">
-      <form action="/searches/new" method="post">
-        <input type="text" name="search" placeholder="Search by Title or Author" required>
-        <label for="title">
+      <form class="search-form" action="/searches/new" method="post">
+        <input class="input-user-enters-text" type="text" name="search" placeholder="Search by Title or Author" required>
+        <label class="radio-label">
           <span>Title</span>
-          <input type="radio" name="search" value="title" required checked>
+          <input type="radio" name="search" value="title" required checked />
         </label>
-        <label for="author">
+        <label class="radio-label">
           <span>Author</span>
-          <input type="radio" name="search" value="author" required>
+          <input type="radio" name="search" value="author" required />
         </label>
-        <button type="submit">Search</button>
+        <button class="big-btn" type="submit">Search</button>
       </form>
     </main>
     <footer>
       <%- include('../../layout/footer') %>
     </footer>
+    <%- include('../../layout/js-links') %>
   </body>
 </html>

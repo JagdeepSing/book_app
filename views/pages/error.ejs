@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,14 +7,16 @@
     <header>
       <%- include('../layout/header') %>
     </header>
-    <main class="content">
-      <section class="errorMessage">
-        <h3>Error: <%= status %></h3>
-        <p><%= message %></p>
+    <main>
+      <section class="error">
+        <h3 class="error-heading">Error: <%= status %></h3>
+        <p class="error-message"><%= message %></p>
+        <img src="https://media.giphy.com/media/10RgsuetO4uDkY/giphy.gif" alt="move along star wars clone gif">
       </section>
     </main>
     <footer>
-      <%- include('../layout/footer')%>
+      <%- include('../layout/footer') %>
     </footer>
+    <%- include('../layout/js-links') %>
   </body>
 </html>

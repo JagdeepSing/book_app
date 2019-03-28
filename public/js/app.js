@@ -1,9 +1,10 @@
-'use strict';
-
 $(() => {
-  $('.details_link').on('click', function(event) {
-    event.preventDefault();
-    $(this).toggle();
-    $(this).next().toggle();
-  });
+  'use strict';
+  
+  // menu displays on mouseover of menu icon
+  $('#menu-icon').on('mouseover', () => {
+    $('#menu').show();
+    $('header').on('mouseleave', () => {
+      $('#menu').hide();
+    });
 });
