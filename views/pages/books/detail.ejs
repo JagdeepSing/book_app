@@ -1,7 +1,22 @@
-<div class="bookDetails">
-    <p class="bookDescription"><%= book.description %></p>
-    <% if (deepDetails) { %>
-      <h5 class="bookISBN"> <%= book.isbn %></h5>
-      <h5 class="bookshelf">Bookshelf: <%= book.bookshelf %></h5>
-    <% } %>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../../layout/head') %>
+  </head>
+  <body>
+    <header>
+      <%- include('../../layout/header') %>
+    </header>
+    
+    <main class="content">
+      <ul id="books-container">
+        <%- include('../partials/book-contents', { book: book, deepDetails: true }) %>
+      </ul>
+    </main>
+    <footer>
+      <%- include('../../layout/footer') %>
+    </footer>
+
+    <%- include('../../layout/js-links') %>
+  </body>
+</html>
