@@ -14,14 +14,13 @@
     </div>
     <main class="content">
       <!-- All books from database -->
-      <ul>
+      <ul id="books-container">
         <% sqlResults.rows.forEach(book => { %>
           <li class="book" data-id="<%= book.id %>">
-            <img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
-            <h3 class="bookTitle"><%= book.title %></h3>
-            <h5 class="bookAuthor"><%= book.author %></h5>
-            <p class="bookDescription hidden"><%= book.description %></p>
-            <button class="big-btn detials-btn">View Details</button>
+            <%- include('./partials/book-contents', { book: book}) %>
+            <a href="/books/<%= book.id %>">
+              <button class="big-btn details-btn">View Details</button>
+            </a>
           </li>
         <% }); %>
         </ul>
@@ -29,5 +28,7 @@
     <footer>
       <%- include('../layout/footer') %>
     </footer>
+
+    <%- include('../layout/js-links') %>
   </body>
 </html>

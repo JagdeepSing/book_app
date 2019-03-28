@@ -24,26 +24,38 @@ app.set('view engine', 'ejs');
 // LISTEN ON PORT
 app.listen(PORT, () => console.log(`Book app listening on ${PORT}`));
 
-// ROUTES
-app.get('/hello', (req, res) => {
-  res.send('HELLO WORLD! nothing here yet');
-});
+const gifs = {
+  moveAlong: 'https://media.giphy.com/media/10RgsuetO4uDkY/giphy.gif',
+  superRare: 'https://media.giphy.com/media/1HH6lJOzOXAY/giphy.gif',
+  smh: 'https://media.giphy.com/media/kPu4Q1oYpmj3gopFZy/giphy.gif',
+  hiding: 'https://media.giphy.com/media/B37cYPCruqwwg/giphy.gif',
+  noresponse: 'https://media.giphy.com/media/R55sOeBR22ogg/giphy.gif',
+  thereWasTime: 'https://media.giphy.com/media/13ZvdTQADxhvZm/giphy.gif',
+};
 
+
+// ROUTES
 app.get('/', getBooksFromDatabase);
 
 app.get('/search', (req, res) => {
   res.render('pages/searches/new');
-})
+});
+
 app.post('/searches/new', getBookDataFromApi);
+
+app.get('/*', (req, res) => {
+  handleError({ status: 404 }, 'Nothing here... ¯¯\\_(ツ)_/¯', gifs.moveAlong, res);
+});
 
 // HELPER FUNCTIONS
 
-function handleError(error, errorMessage, res) {
+function handleError(error, errorMessage, errorGif, res) {
   // console.error(error);
   if (res) {
     res.render('pages/error', {
       status: error.status,
       message: errorMessage,
+      gif: errorGif,
     });
   }
 }
@@ -53,10 +65,10 @@ function getBooksFromDatabase(req, res) {
   client.query(selectSql)
     .then(sqlResult => {
       // res.send('hello');
-      if (!sqlResult.rowCount) handleError({ status: 404 }, 'Fire at Alexandrea!! The knowledge has been lost, the SQL data has been dropped!', res);
+      if (!sqlResult.rowCount) handleError({ status: 404 }, 'Fire at Alexandrea!! The knowledge has been lost, the SQL data has been dropped!', gifs.thereWasTime, res);
       res.render('pages/index', { sqlResults : sqlResult });
     })
-    .catch(error => handleError(error, 'Database hiding :('));
+    .catch(error => handleError(error, 'Database hiding :(', gifs.hiding, res));
 }
 
 /**
@@ -70,7 +82,7 @@ function getBookDataFromApi(req, res) {
   superagent.get(url)
     .then(apiData => {
       if (apiData.body.totalItems === 0) {
-        handleError({status: 404}, `You found something Google doesn't know!!`, res);
+        handleError({status: 404}, `You found something Google doesn't know!!`, gifs.superRare, res);
       } else {
         let resultBooks = apiData.body.items.map((bookData) => {
           let bookObject = new Book(bookData.volumeInfo);
@@ -82,30 +94,22 @@ function getBookDataFromApi(req, res) {
             .then(insertReturn => {
               bookObject.id = insertReturn.rows[0].id;
             })
-            .catch(error => handleError(error, `Google gave us some ugly data :(`, res));
+            .catch(error => handleError(error, `Google gave us some ugly data :(`, gifs.smh, res));
 
           return bookObject;
         });
         res.render('pages/searches/show', { searchResults: resultBooks });
       }
     })
-    .catch(error => handleError(error, `Google won't talk to us :(`, res));
+    .catch(error => handleError(error, `Google won't talk to us :(`, gifs.noresponse, res));
 }
 
 // Object constructor
 function Book(data, bookshelf) {
   this.author = (data.authors) ? data.authors.join(', ') : 'No known author(s)';
   this.title = data.title || 'No Title';
-  this.isbn = data.industryIdentifiers ? `${data.industryIdentifiers[0].type} ${data.industryIdentifiers[0].identifier}` : 'N/A';
+  this.isbn = data.industryIdentifiers ? `${data.industryIdentifiers[0].type}: ${data.industryIdentifiers[0].identifier}` : null;
   this.image_url = (data.imageLinks.thumbnail) ? data.imageLinks.thumbnail.replace('http://', 'https://') : 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';
   this.description = data.description || 'No description available.';
   this.bookshelf = bookshelf || 'Not Shelfed';
-
-
-  // this.subtitle = data.subtitle || 'No Subtitle';
-  // this.publisher = data.publisher || 'No publisher info';
-  // this.pageCount = data.pageCount || -1;
-  // this.categories = (data.categories) ? data.categories.join(', ') : '';
-  // this.maturityRating = data.maturityRating || 'No Rating';
-  // this.created_at = Date.now();
 }

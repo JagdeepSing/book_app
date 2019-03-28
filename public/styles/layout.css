@@ -13,14 +13,21 @@
   width: 100%;
 }
 
-.hidden {
+.hidden, #menu {
   display: none;
+}
+
+#books-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .book {
   background-color: #dedede;
-  margin: 0 20px;
+  margin: 0 40px;
   margin-bottom: 50px;
-  padding: 5% 10%;
+  padding: 10px 20px;
   box-shadow: 1px 1px 1px 1px;
+  width: 300px;
 }
