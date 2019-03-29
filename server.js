@@ -84,7 +84,6 @@ app.put('/update/:book_id', (req, res) => {
 });
 
 // delete route, remove information from our database
-// TODO: can't access this route for some reason
 app.delete('/delete/:book_id', deleteBook);
 
 // HELPER FUNCTIONS ------------------------------------------------------
@@ -116,7 +115,7 @@ function addBook(req, res) {
   let values = [author, title, isbn, image_url, description, bookshelf];
   
   return client.query(SQL, values)
-    .then(sqlReturn => console.log(sqlReturn.rows[0]))
+    .then(sqlReturn => res.render('pages/books/show', {book: sqlReturn.rows[0]}))
     .catch(err => handleError(err, 'Failed to save book.', gifs.hiding, res));
 }
 
@@ -134,7 +133,6 @@ function getBooksFromDatabase(req, res) {
   let selectSql = `SELECT * FROM books;`;
   client.query(selectSql)
     .then(sqlResult => {
-      if (!sqlResult.rowCount) handleError({ status: 404 }, 'Fire at Alexandrea!! The knowledge has been lost, the SQL data has been dropped!', gifs.thereWasTime, res);
       res.render('pages/index', { sqlResults : sqlResult });
     })
     .catch(error => handleError(error, 'Database hiding :(', gifs.hiding, res));
