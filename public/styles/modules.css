@@ -9,7 +9,7 @@
 }
 
 .page-subtitle {
-  background-color: #585858;
+  background-color: #6969d6cf;
   padding: 15px;
   color: white;
 
@@ -24,7 +24,7 @@
 }
 
 .bookTitle {
-  color: white;
+  color: #8076f9;
   text-shadow: 1px 1px black;
 }
 
@@ -41,8 +41,6 @@
 }
 
 .big-btn {
-  background-color: black;
-  color: white;
   width: 50%;
   height: 70px;
   font-size: 14pt;
@@ -84,7 +82,7 @@
 }
 
 .radio-label {
-  background-color: #d4d4d4;
+  background-color: #c8c8f7;
   text-align: left;
   display: flex;
   align-items: center;
@@ -108,7 +106,7 @@
 .form fieldset {
   width: 80vw;
   height: 90vh;
-  background-color: white;
+  background-color: #d5d5e2;
 
   border-radius: 2em;
 }
@@ -123,8 +121,24 @@
   width: 50%;
   height: 60px;
   font-size: 30px;
+  margin-top: 80px;
+}
+
+#detail-btns {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+#detail-btns button {
+  width: 150px;
+  height: 60px;
+  font-size: 15px;
+}
+
+button {
   border-radius: 2em;
   background-color: #8585de;
   color: white;
-  margin-top: 80px;
 }

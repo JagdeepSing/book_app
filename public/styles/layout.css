@@ -1,13 +1,18 @@
 #app-title {
   display: flex;
   justify-content: space-between;
-  background-color: black;
+  background-color: #8585de;
   color: white;
   padding: 20px 30px;
+
+  -moz-box-shadow: 2px 2px 3px rgba(0,0,0,.5);
+  -webkit-box-shadow: 2px 2px 3px rgba(0,0,0,.5);
+  box-shadow: 2px 2px 3px rgba(0,0,0,.5);
 }
 
+
 #menu {
-  background-color: #000000d9;
+  background-color: #6e6ec5e8;
   padding: 10px 0;
   position: absolute;
   width: 100%;
@@ -24,7 +29,7 @@
 }
 
 .book {
-  background-color: #dedede;
+  background-color: #b6b6ce6b;
   margin: 0 40px;
   margin-bottom: 50px;
   padding: 10px 20px;
