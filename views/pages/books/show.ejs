@@ -2,36 +2,37 @@
 <html lang="en">
 
 <head>
-  <%- include('../layout/head') %>
+  <%- include('../../layout/head') %>
 </head>
 
 <body>
   <header>
-    <%- include('../layout/header') %>
+    <%- include('../../layout/header') %>
   </header>
-  <main class="content">
-    <!-- All books from database -->
-    <ul>
-      <% sqlResults.rows.forEach(book => { %>
+  <main>
+    <!-- Details page for single book -->
+    <ul id="books-container">
       <li class="book">
+        <%- include('../books/detail', { book: book, show: 'deep details' }) %>
+        
+        <div>
+          <button class="small-btn update-btn" value="#<%= book.id %>">Update Details</button>
+          <a href="/delete/<%= book.id %>">
+            <button class="small-btn">Delete</button>
+          </a>
+        </div>
 
-        <img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
-        <h3 class="bookTitle"><%= book.title %></h3>
-        <h5 class="bookAuthors"><%= book.authors %></h5>
-        <a href="#" class="details_link">
-          <button class="big-btn">View Details</button>
-        </a>
-
+        <!-- displayed by click of update details button -->
+        <section class="form-div" id="<%=book.id%>">
+          <%- include('../books/edit', {formAction: 'update', book: book }) %>
+        </section>
       </li>
-      <% }); %>
     </ul>
   </main>
   <footer>
-    <%- include('../layout/footer') %>
+    <%- include('../../layout/footer') %>
   </footer>
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="./js/app.js"></script>
+  <%- include('../../layout/js-links') %>
 </body>
 
 </html>

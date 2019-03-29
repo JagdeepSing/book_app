@@ -37,3 +37,45 @@
   align-items: center;
   justify-content: center;
 }
+
+.form-div {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #000000ba;
+  display: none;
+  padding: 5vh 0;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.form fieldset {
+  width: 80vw;
+  height: 90vh;
+  background-color: white;
+
+  border-radius: 2em;
+}
+
+.form-div fieldset > * {
+  margin: 3vh auto;
+  width: 90%;
+  font-size: 14pt;
+}
+
+.form-div fieldset > button {
+  width: 50%;
+  height: 60px;
+  font-size: 30px;
+  border-radius: 2em;
+  background-color: #8585de;
+  color: white;
+}

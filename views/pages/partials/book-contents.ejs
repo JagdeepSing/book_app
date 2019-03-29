@@ -3,13 +3,11 @@
 <h5 class="bookAuthor"><%= book.author %></h5>
 
 <% if (show.includes('details')) { %>
-<div class="bookDetails">
-  <p class="bookDescription"><%= book.description %></p>
-
-  <% if (show === 'deep details') { %>
-  <h5 class="bookISBN"> <%= book.isbn %></h5>
-  <h5 class="bookshelf">Bookshelf: <%= book.bookshelf %></h5>
-  <% } %>
-
-</div>
+  <div class="bookDetails">
+    <p class="bookDescription"><%= book.description %></p>
+    <% if (show === 'deep details') { %>
+      <h5 class="bookISBN"> <%= book.isbn %></h5>
+      <h5 class="bookshelf">Bookshelf: <%= book.bookshelf %></h5>
+    <% } %>
+  </div>
 <% } %>

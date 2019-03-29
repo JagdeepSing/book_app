@@ -36,3 +36,7 @@ header {
   position: sticky;
   top: 0;
 }
+
+fieldset {
+  width: 80%;
+}

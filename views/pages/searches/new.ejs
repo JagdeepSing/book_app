@@ -12,16 +12,18 @@
     </div>
     <main class="content">
       <form class="search-form" action="/searches/new" method="post">
-        <input class="input-user-enters-text" type="text" name="search" placeholder="Search by Title or Author" required>
-        <label class="radio-label">
-          <span>Title</span>
-          <input type="radio" name="search" value="title" required checked />
-        </label>
-        <label class="radio-label">
-          <span>Author</span>
-          <input type="radio" name="search" value="author" required />
-        </label>
-        <button class="big-btn" type="submit">Search</button>
+        <fieldset>
+          <input class="input-user-enters-text" type="text" name="search" placeholder="Search by Title or Author" required>
+          <label class="radio-label">
+            <span>Title</span>
+            <input type="radio" name="search" value="title" required checked />
+          </label>
+          <label class="radio-label">
+            <span>Author</span>
+            <input type="radio" name="search" value="author" required />
+          </label>
+          <button class="big-btn" type="submit">Search</button>
+        </fieldset>
       </form>
     </main>
     <footer>
