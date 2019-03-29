@@ -43,10 +43,12 @@ app.listen(PORT, () => console.log(`Book app listening on ${PORT}`));
 // get routes (send information out)
 app.get('/', getBooksFromDatabase);
 
+// TODO: refactor into callback
 app.get('/search', (req, res) => {
   res.render('pages/searches/new');
 });
 
+// TODO: refactor into callback
 app.get('/books/details/:book_id', (req, res) => {
   // query saved books to display
   let query = `SELECT * FROM books WHERE id=$1;`;
@@ -70,6 +72,7 @@ app.post('/searches/new', getBookDataFromApi);
 app.post('/add', addBook);
 
 // put routes, update information in our database
+// TODO: refactor into callback
 app.put('/update/:book_id', (req, res) => {
   let {title, author, isbn, image_url, description, bookshelf} = req.body;
 

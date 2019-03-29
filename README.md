@@ -36,6 +36,11 @@ Technologies used:
 
 ## Change Log
 
+03/25/2019: added server side homepage, GOOGLE BOOKS API search, deployed to Heroku
+03/26/2019: error routes and database fixes
+03/27/2019: buttons for saving individual books from search not all, other buttons and UI
+03/28/2019: forms, making it so form is a popup not a page redirect
+03/29/2019: UI changes, better colors, made buttons functional
 
 ## Credits and Collaborations
 
@@ -156,3 +161,34 @@ Number and name of feature: #4: Add update book button
 - Start time: 1:20pm
 - Finish time: 1:40pm
 - Actual time needed to complete: not completed yet
+
+### Part 4: Wrap up all bugs and final features
+
+Number and name of feature: #1: UI updates
+
+- Estimate of time needed to complete: 60mins
+- Start time: 9:50am
+- Finish time: 10:30am
+- Actual time needed to complete: 40mins
+
+
+Number and name of feature: #2: Add functional buttons on details page
+
+- Estimate of time needed to complete: 30mins
+- Start time: 10:30am
+- Finish time: 11:40am
+- Actual time needed to complete: 70mins (took a while to figure out how to do a delete route)
+
+Number and name of feature: #3: Add functional add to database button 
+
+- Estimate of time needed to complete: 30mins
+- Start time: 12:00pm
+- Finish time: 12:15pm
+- Actual time needed to complete: 15mins
+
+Number and name of feature: #4: Dropdown and bookshelf input on forms
+
+- Estimate of time needed to complete: 60mins
+- Start time: 12:00pm
+- Finish time: 1:00pm
+- Actual time needed to complete: 60mins
