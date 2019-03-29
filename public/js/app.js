@@ -17,8 +17,8 @@ $(() => {
   });
 
   // update button on book details page displays popup form
-  $('.update-btn').on('click', function(event) {
-    console.log($(event.target).val());
-    $($(event.target).val()).show();
-  });
+  $('.update-btn').on('click', (event) => $($(event.target).val()).show());
+
+  // select button on search page displays popup form
+  $('.select-btn').on('click', (event) => $(event.target).next().show());
 });

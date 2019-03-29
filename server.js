@@ -61,29 +61,6 @@ app.get('/books/details/:book_id', (req, res) => {
     .catch(error => console.error(error));
 });
 
-// app.get('/books/edit/:book_id', (req, res) => {
-//   getSqlByID(req.params.book_table, req.params.book_id, res)
-//     .then(bookObj => {
-//       res.render('pages/books/edit', {book: bookObj.rows[0]});
-//     })
-//     .catch(error => console.error(error));
-// });
-
-app.put('/update/:book_id', (req, res) => {
-  let {title, author, isbn, image_url, description, bookshelf} = req.body;
-  
-  let SQL = `UPDATE books SET title=$1, author=$2, isbn=$3, image_url=$4, description=$5, bookshelf=$6 WHERE id=$7 RETURNING *`;
-  let values = [title, author, isbn, image_url, description, bookshelf, req.params.book_id];
-
-  // console.log(values);
-
-  client.query(SQL, values)
-    .then(sqlReturn => {
-      res.render('pages/books/show', { book: (sqlReturn.rows[0]) });
-    })
-    .catch(err => handleError(err, `Something went wrong and we couldn't update the book`, gifs.superRare, res));
-});
-
 app.get('/*', (req, res) => {
   handleError({ status: 404 }, 'Nothing here... ¯¯\\_(ツ)_/¯', gifs.moveAlong, res);
 });
@@ -92,7 +69,23 @@ app.get('/*', (req, res) => {
 app.post('/searches/new', getBookDataFromApi);
 app.post('/add', addBook);
 
+// put routes, update information in our database
+app.put('/update/:book_id', (req, res) => {
+  let {title, author, isbn, image_url, description, bookshelf} = req.body;
 
+  let SQL = `UPDATE books SET title=$1, author=$2, isbn=$3, image_url=$4, description=$5, bookshelf=$6 WHERE id=$7 RETURNING *`;
+  let values = [title, author, isbn, image_url, description, bookshelf, req.params.book_id];
+
+  client.query(SQL, values)
+    .then(sqlReturn => {
+      res.render('pages/books/show', { book: (sqlReturn.rows[0]) });
+    })
+    .catch(err => handleError(err, `Something went wrong and we couldn't update the book`, gifs.superRare, res));
+});
+
+// delete route, remove information from our database
+// TODO: can't access this route for some reason
+app.delete('/delete/:book_id', deleteBook);
 
 // HELPER FUNCTIONS ------------------------------------------------------
 
@@ -127,6 +120,16 @@ function addBook(req, res) {
     .catch(err => handleError(err, 'Failed to save book.', gifs.hiding, res));
 }
 
+function deleteBook(req, res) {
+  console.log('deleting book', req.params.book_id);
+  let SQL = `DELETE FROM books WHERE id=$1`;
+  let values = [req.params.book_id];
+
+  return client.query(SQL, values)
+    .then(res.redirect('/'))
+    .catch(err => handleError(err, '', gifs.noresponse, res));
+}
+
 function getBooksFromDatabase(req, res) {
   let selectSql = `SELECT * FROM books;`;
   client.query(selectSql)
@@ -152,13 +155,6 @@ function getBookDataFromApi(req, res) {
         handleError({status: 404}, `You found something Google doesn't know!!`, gifs.superRare, res);
       } else {
         let resultBooks = apiData.body.items.map((bookData) => new Book(bookData.volumeInfo));
-
-        // let insertSql = `INSERT INTO books (author, title, isbn, image_url, description, bookshelf, search_term) VALUES ($1, $2, $3, $4, $5, $6, ${searchTerm}) RETURNING id;`;
-        // let insertValues = Object.values(bookObject);
-
-        // client.query(insertSql, insertValues)
-        //   .then(insertReturn => bookObject.id = insertReturn.rows[0].id)
-        //   .catch(error => handleError(error, `Sorry, we got some bad data for that search :(`, gifs.smh, res));
 
         res.render('pages/searches/show', { searchResults: resultBooks });
       }
