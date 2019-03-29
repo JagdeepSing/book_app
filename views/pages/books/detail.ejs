@@ -1,30 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <%- include('../../layout/head') %>
-  </head>
-  <body>
-    <header>
-      <%- include('../../layout/header') %>
-    </header>
-    
-    <main class="content">
-      <ul id="books-container">
-        <li class="book" data-id="<%= book.id %>">
-          <%- include('../partials/book-contents', { book: book, show: 'deep details' }) %>
-          <a href="/savedbooks/edit/<%= book.id %>">
-            <button class="big-btn">Update Details</button>
-          </a>
-          <a href="/delete/<%= book.id %>">
-            <button class="big-btn">Delete</button>
-          </a>
-        </li>
-      </ul>
-    </main>
-    <footer>
-      <%- include('../../layout/footer') %>
-    </footer>
+<!-- only the contents of book containers -->
 
-    <%- include('../../layout/js-links') %>
-  </body>
-</html>
+<img src="<%= book.image_url %>" alt="Image for <%= book.title %>">
+<h3 class="bookTitle"><%= book.title %></h3>
+<h5 class="bookAuthor"><%= book.author %></h5>
+
+<% if (show.includes('details')) { %>
+  <div class="bookDetails">
+    <p class="bookDescription"><%= book.description %></p>
+
+    <% if (show === 'deep details') { %>
+      <h5 class="bookISBN"> <%= book.isbn %></h5>
+      <h5 class="bookshelf">Bookshelf: <%= book.bookshelf %></h5>
+    <% } %>
+    
+  </div>
+<% } %>

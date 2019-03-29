@@ -8,23 +8,32 @@
     <header>
       <%- include('../layout/header') %>
     </header>
-    <div class="page-subtitle">
+
+    <section class="page-subtitle">
       <div id="results-num"><%= sqlResults.rowCount %></div>
       <h4>Saved Books</h4>
-    </div>
+    </section>
+
     <main class="content">
+
       <!-- All books from database -->
       <ul id="books-container">
         <% sqlResults.rows.forEach(book => { %>
           <li class="book" data-id="<%= book.id %>">
-            <%- include('./partials/book-contents', { book: book, show: 'none' }) %>
-            <a href="/savedbooks/details/<%= book.id %>">
+
+            <%- include('./books/detail', { book: book, show:'none' }) %>
+
+            <!-- View Details Button (unique to this page) -->
+            <a href="/books/details/<%= book.id %>">
               <button class="big-btn">View Details</button>
             </a>
+          
           </li>
         <% }); %>
-        </ul>
+
+      </ul>
     </main>
+
     <footer>
       <%- include('../layout/footer') %>
     </footer>

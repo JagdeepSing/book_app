@@ -1,37 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <%- include('../../layout/head') %>
-  </head>
-  <body>
-    <header>
-      <%- include('../../layout/header') %>
-    </header>
-    
-    <main class="content">
-      <form class="search-form" action="/savedbooks/update/<%= book.id %>" method="post">
-        <fieldset>
-          <input name="_method" type="hidden" value="put">
-          <input class="input-user-enters-text" type="text" name="edit" value="<%= book.title %>" placeholder="Title" required>
-  
-          <input class="input-user-enters-text" type="text" name="edit" value="<%= book.author %>" placeholder="Author" required>
-  
-          <input class="input-user-enters-text" type="text" name="edit" value="<%= book.isbn %>" placeholder="ISBN">
-  
-          <input class="input-user-enters-text" type="text" name="edit" value="<%= book.image_url %>" placeholder="Image URL">
-  
-          <textarea class="input-user-enters-text" name="edit" placeholder="Book Description"><%= book.description %></textarea>
-  
-          <button class="big-btn" type="submit">Update Book</button>
-        </fieldset>
-      </form>
-    </main>
-    <footer>
-      <%- include('../../layout/footer') %>
-    </footer>
+<form class="edit-form form" action="<%= formAction === 'create' ? '/add' : `/update/${book.id}` %>" method="post">
 
-    <%- include('../../layout/js-links') %>
-  </body>
-</html>
+  <fieldset>
+    <!-- put = update existing book in DB, post = add book to DB -->
+    <input name="_method" type="hidden" value="<%= formAction === 'update' ? 'put' : 'post' %>">
 
-<!-- title, author, isbn, image url, description, bookshelf dropdown -->
+    <input class="input-user-enters-text" type="text" name="title" value="<%= book.title %>" placeholder="Book Title" required>
+
+    <input class="input-user-enters-text" type="text" name="author" value="<%= book.author %>" placeholder="Book Author" required>
+
+    <input class="input-user-enters-text" type="text" name="isbn" value="<%= book.isbn %>" placeholder="Book ISBN">
+
+    <input class="input-user-enters-text" type="text" name="image_url" value="<%= book.image_url %>" placeholder="Book Cover Image URL">
+
+    <textarea class="input-user-enters-text" rows="5" name="description" placeholder="Book Description"><%= book.description %></textarea>
+
+    <input class="input-user-enters-text" type="text" name="bookshelf" value="Not Shelved" placeholder="Enter a Bookshelf Name">
+
+    <button class="medium-btn" type="submit"><%= formAction === 'create' ? 'Save' : 'Update' %> Book</button>
+  </fieldset>
+
+</form>
