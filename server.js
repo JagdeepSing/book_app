@@ -49,14 +49,23 @@ app.get('/search', (req, res) => {
 
 app.get('/books/details/:book_id', (req, res) => {
   // query saved books to display
+
+  let bookshelves;
+  let bookshelfQuery = `SELECT DISTINCT bookshelf FROM books;`;
+  client.query(bookshelfQuery)
+    .then(bookshelfResult => {
+      if (!bookshelfResult.rowCount) handleError({ status: 404 }, 'Cannot get list of bookshelves. You\'ll have to enter your own...', gifs.superRare, res);
+      bookshelves = bookshelfResult.rows;
+    })
+    .catch(error => console.error(error));
+
   let query = `SELECT * FROM books WHERE id=$1;`;
   let values = [req.params.book_id];
-
   client.query(query, values)
     .then(sqlResult => {
       if (!sqlResult.rowCount) handleError({status: 404}, 'No good, the book went up in smoke', gifs.hiding, res);
 
-      res.render('pages/books/show', {book: sqlResult.rows[0]});
+      res.render('pages/books/show', {book: sqlResult.rows[0], bookshelves: bookshelves});
     })
     .catch(error => console.error(error));
 });
@@ -71,6 +80,16 @@ app.post('/add', addBook);
 
 // put routes, update information in our database
 app.put('/update/:book_id', (req, res) => {
+
+  let bookshelves;
+  let bookshelfQuery = `SELECT DISTINCT bookshelf FROM books;`;
+  client.query(bookshelfQuery)
+    .then(bookshelfResult => {
+      if (!bookshelfResult.rowCount) handleError({ status: 404 }, 'Cannot get list of bookshelves. You\'ll have to enter your own...', gifs.superRare, res);
+      bookshelves = bookshelfResult.rows;
+    })
+    .catch(error => console.error(error));
+  
   let {title, author, isbn, image_url, description, bookshelf} = req.body;
 
   let SQL = `UPDATE books SET title=$1, author=$2, isbn=$3, image_url=$4, description=$5, bookshelf=$6 WHERE id=$7 RETURNING *`;
@@ -78,7 +97,7 @@ app.put('/update/:book_id', (req, res) => {
 
   client.query(SQL, values)
     .then(sqlReturn => {
-      res.render('pages/books/show', { book: (sqlReturn.rows[0]) });
+      res.render('pages/books/show', { book: (sqlReturn.rows[0]), bookshelves: bookshelves });
     })
     .catch(err => handleError(err, `Something went wrong and we couldn't update the book`, gifs.superRare, res));
 });
@@ -109,13 +128,23 @@ function handleError(error, errorMessage, errorGif, res) {
 }
 
 function addBook(req, res) {
+
+  let bookshelves;
+  let bookshelfQuery = `SELECT DISTINCT bookshelf FROM books;`;
+  client.query(bookshelfQuery)
+    .then(bookshelfResult => {
+      if (!bookshelfResult.rowCount) handleError({ status: 404 }, 'Cannot get list of bookshelves. You\'ll have to enter your own...', gifs.superRare, res);
+      bookshelves = bookshelfResult.rows;
+    })
+    .catch(error => console.error(error));
+
   let {title, author, isbn, image_url, description, bookshelf} = req.body;
 
   let SQL = `INSERT INTO books (author, title, isbn, image_url, description, bookshelf) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`;
   let values = [author, title, isbn, image_url, description, bookshelf];
   
   return client.query(SQL, values)
-    .then(sqlReturn => res.render('pages/books/show', {book: sqlReturn.rows[0]}))
+    .then(sqlReturn => res.render('pages/books/show', {book: sqlReturn.rows[0], bookshelves: bookshelves}))
     .catch(err => handleError(err, 'Failed to save book.', gifs.hiding, res));
 }
 
