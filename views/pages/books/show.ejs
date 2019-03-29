@@ -15,14 +15,13 @@
       <li class="book">
         <%- include('../books/detail', { book: book, show: 'deep details' }) %>
         
-        <div>
-          <button class="small-btn update-btn" value="#<%= book.id %>">Update Details</button>
+        <div id="detail-btns">
+          <button class="update-btn" value="#<%= book.id %>">Update Details</button>
 
           <form action="/delete/<%= book.id %>" method="post">
             <input type="hidden" name="_method" value="delete">
             <button type="submit">Delete</button>
           </form>
-
         </div>
 
         <!-- displayed by click of update details button -->

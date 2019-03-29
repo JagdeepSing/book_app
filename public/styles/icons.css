@@ -8,3 +8,7 @@
   padding: 2px;
   margin: 0 5px;
 }
+
+#menu-icon:hover {
+  transform: scale(1.1);
+}
