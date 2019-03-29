@@ -14,7 +14,15 @@
 
     <textarea class="input-user-enters-text" rows="5" name="description" placeholder="Book Description"><%= book.description %></textarea>
 
-    <input class="input-user-enters-text" type="text" name="bookshelf" value="" placeholder="Enter a Bookshelf Name">
+    <% if (formAction === 'update') { %>
+      <select id="bookshelfList" name="bookshelf">
+        <% bookshelves.forEach(bookshelf => { %>
+        <option value="<%= bookshelf.bookshelf %>" <% if (bookshelf.bookshelf === book.bookshelf) { %>selected<% } %>><%= bookshelf.bookshelf %></option>
+        <% }); %>
+      </select>
+    <% } else { %>
+      <input class="input-user-enters-text" type="text" name="bookshelf" placeholder="Enter a Bookshelf Name">
+    <% } %>
 
     <button class="medium-btn" type="submit"><%= formAction === 'create' ? 'Save' : 'Update' %> Book</button>
   </fieldset>

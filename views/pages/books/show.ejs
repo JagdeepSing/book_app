@@ -25,8 +25,8 @@
         </div>
 
         <!-- displayed by click of update details button -->
-        <section class="form-div" id="<%=book.id%>">
-          <%- include('../books/edit', {formAction: 'update', book: book }) %>
+        <section class="form-div" id="<%= book.id %>">
+          <%- include('../books/edit', {formAction: 'update', book: book, bookshelves: bookshelves}) %>
         </section>
       </li>
     </ul>
