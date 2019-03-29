@@ -198,5 +198,5 @@ function Book(data) {
   this.isbn = data.industryIdentifiers ? `${data.industryIdentifiers[0].type}: ${data.industryIdentifiers[0].identifier}` : null;
   this.image_url = (data.imageLinks && data.imageLinks.thumbnail) ? data.imageLinks.thumbnail.replace('http://', 'https://') : 'https://unmpress.com/sites/default/files/default_images/no_image_book.jpg';
   this.description = data.description || 'No description available.';
-  this.bookshelf = data.bookshelf || 'Not Shelved';
+  this.bookshelf = (data.bookshelf && data.bookshelf !== '') ? (data.bookshelf) : ('Not Shelved');
 }
