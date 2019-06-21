@@ -1,5 +1,5 @@
 # Lab-11
-## Book App ([Deployment](js-jv-booklist.herokuapp.com/))
+## Book App ([Deployment](http://www.js-jv-booklist.herokuapp.com))
 
 **Author**: Jagdeep Singh, Jesse Van Volkinburg
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
